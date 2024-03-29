@@ -19,5 +19,5 @@ export const postNewJoke = async (inputValue) => {
         body: JSON.stringify(newJokeObject)
     }
     await fetch('http://localhost:8088/jokes', postOptions)
-
+    
 }

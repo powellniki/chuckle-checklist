@@ -83,7 +83,6 @@ h2 {
   border-bottom: 3px solid var(--col-2);
   padding: 0.25rem 0;
   color: green;
-  font-size: 100rem;
 }
 
 /** Class for the container that wraps your input and button for adding a joke. */
