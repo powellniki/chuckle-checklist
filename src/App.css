@@ -151,7 +151,7 @@ h2 {
 
     /** Class for the count of untold jokes. Add it to a <span> element within the <h2> for Untold */
     .untold-count {
-      color: var(--col-0);
+      color: var(--col-5);
     }
 
     /** Adds styles for both the told-count class and the untold-count class*/
@@ -182,12 +182,21 @@ h2 {
 
   /** Classes for the action buttons. Wrap the buttons in their own div*/
   /** The toggle class is for the buttons to mark a joke as told or untold*/
-  .joke-list-action-delete,
+  .joke-list-action-delete {
+    border: none;
+    padding: 5px;
+    margin-left: 0.25rem;
+    background: red;
+    border-radius: 3px;;
+    color: var(--col-4);
+  }
+  
   .joke-list-action-toggle {
     border: none;
     padding: 5px;
     margin-left: 0.25rem;
-    background: transparent;
+    background: rgb(118, 179, 127);
+    border-radius: 3px;;
     color: var(--col-4);
   }
 
