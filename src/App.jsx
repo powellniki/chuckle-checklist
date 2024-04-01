@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import "./App.css"
-import { getAllJokes, postNewJoke } from "./services/jokeServices.js"
+import { getAllJokes, postNewJoke, putJoke } from "./services/jokeServices.js"
 
 
 
 export const App = () => {
-  const [inputValue, setInputValue] = useState([]) // store joke
+  const [inputValue, setInputValue] = useState([]) // store new joke input
   const [allJokes, setAllJokes] = useState([]) // store all jokes
   const [untoldJokes, setUntoldJoke] = useState([]) // store untold jokes
   const [toldJokes, setToldJoke] = useState([]) //store told jokes
@@ -60,10 +60,46 @@ export const App = () => {
 
     // function for updated the database
     const updateDatabase = () => {
-      getAllJokes().then((jokeArr) => {
-        setAllJokes(jokeArr)
+      getAllJokes().then((jokeArray) => {
+        setAllJokes(jokeArray)
       })
     }
+
+
+
+    // toggle joke boolean
+    const toggleJoke = (clickEvent) => {
+      let foundJoke = allJokes.find(
+        (joke) => {
+          return joke.id === parseInt(clickEvent.target.dataset.id)
+        } 
+      )
+      foundJoke.told = !foundJoke.told
+      putJoke(foundJoke)
+      updateDatabase()
+    }
+
+
+
+    // delete joke from database
+    const handleDeleteJoke = (clickEvent) => {
+      // find the joke object to delete
+      let jokeObject = allJokes.find(
+        (joke) => {
+          return joke.id === parseInt(clickEvent.target.dataset.id)
+        }
+      )
+
+      // delete the joke object from the state
+      let updatedJokes = allJokes.filter(joke => joke.id !== jokeObject.id)
+      setAllJokes(updatedJokes)
+
+      deleteJoke(jokeObject)
+      updateDatabase()
+    }
+
+
+
 
 
   return (
@@ -90,8 +126,8 @@ export const App = () => {
                     <li className="joke-list-item">
                       <p className="joke-list-item-text">{joke.text}</p>
                       <span>
-                        <div><button className="joke-list-action-toggle"></button></div>
-                        <div><button className="joke-list-action-delete"></button></div>
+                        <div><button data-id={joke.id} className="joke-list-action-toggle" onClick={(clickEvent) => {toggleJoke(clickEvent)}}></button></div>
+                        <div><button data-id={joke.id} className="joke-list-action-delete" onClick={(clickEvent) => {handleDeleteJoke(clickEvent)}}></button></div>
                       </span>
                     </li>
                   </div>
@@ -109,9 +145,9 @@ export const App = () => {
                   <li className="joke-list-item">
                     <p className="joke-list-item-text">{joke.text}</p>
                     <span>
-                        <div><button className="joke-list-action-toggle"></button></div>
-                        <div><button className="joke-list-action-delete"></button></div>
-                      </span>
+                      <div><button data-id={joke.id} className="joke-list-action-toggle" onClick={(clickEvent) => {toggleJoke(clickEvent)}}></button></div>
+                      <div><button data-id={joke.id} className="joke-list-action-delete" onClick={(clickEvent) => {handleDeleteJoke(clickEvent)}}></button></div>
+                    </span>
                   </li>
                 </div>
               </section>
