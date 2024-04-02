@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import "./App.css"
-import { getAllJokes, postNewJoke, putJoke } from "./services/jokeServices.js"
+import { deleteJoke, getAllJokes, postNewJoke, putJoke } from "./services/jokeServices.js"
 
 
 
 export const App = () => {
+
   const [inputValue, setInputValue] = useState([]) // store new joke input
   const [allJokes, setAllJokes] = useState([]) // store all jokes
   const [untoldJokes, setUntoldJoke] = useState([]) // store untold jokes
@@ -19,7 +20,7 @@ export const App = () => {
     getAllJokes().then(jokeArray => {
       setAllJokes(jokeArray)
     })
-  }, [inputValue])
+  }, [])
 
 
 
@@ -40,12 +41,12 @@ export const App = () => {
   useEffect(() => {
     const untoldJokeCount = untoldJokes.length
     setUntoldJokeCount(untoldJokeCount)
-  }, [allJokes, untoldJokes])
+  }, [untoldJokes])
 
   useEffect(() => {
     const toldJokeCount = toldJokes.length
     settoldJokeCount(toldJokeCount)
-  }, [allJokes, toldJokes])
+  }, [toldJokes])
 
 
 
@@ -83,16 +84,13 @@ export const App = () => {
 
     // delete joke from database
     const handleDeleteJoke = (clickEvent) => {
+
       // find the joke object to delete
       let jokeObject = allJokes.find(
         (joke) => {
           return joke.id === parseInt(clickEvent.target.dataset.id)
         }
       )
-
-      // delete the joke object from the state
-      let updatedJokes = allJokes.filter(joke => joke.id !== jokeObject.id)
-      setAllJokes(updatedJokes)
 
       deleteJoke(jokeObject)
       updateDatabase()

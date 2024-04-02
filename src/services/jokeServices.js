@@ -1,5 +1,5 @@
 
-export const getAllJokes = () => {
+export const getAllJokes = async () => {
     return fetch('http://localhost:8088/jokes').then((res) => res.json())
 }
 
@@ -39,15 +39,7 @@ export const putJoke = async (foundJoke) => {
 
 
 
-export const deleteJoke = async (jokeObject) => {
-
-    const postOptions = {
-        method: "DELETE",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(jokeObject)
-    }
-    await fetch(`http://localhost:8088/jokes/${jokeObject}`, postOptions)
-    
+export const deleteJoke = async (joke) => {
+    const postOptions = {method: "DELETE"}
+    await fetch(`http://localhost:8088/jokes/${joke.id}`, postOptions)
 }
